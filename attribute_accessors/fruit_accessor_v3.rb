@@ -14,6 +14,10 @@ class FruitAccessorV3
     @condition = 'ripe'
   end
 
+  git branch -M main
+
+  git push -u origin main
+
   def inspect
     "a " + @condition + " " + @kind
   end
