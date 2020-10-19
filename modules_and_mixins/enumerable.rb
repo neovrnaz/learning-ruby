@@ -50,14 +50,3 @@ game1.add_player(player2)
 game2 = Game.new
 game2.add_player(player3)
 game2.add_player(player4)
-
-puts game1.inspect
-
-puts game1.any?{|player| player.score > 80}
-
-players = game1.find{|player| player.score > 80}
-puts "Players with a score > 80", players.inspect
-
-game1.each do |players|
-  puts players
-end
