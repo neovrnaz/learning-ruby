@@ -1,4 +1,3 @@
-
 books = ["Demon Haunted World", "A Short History of Nearly Everything", "Basic Economics", "The Rational Optimist"]
 
 # This will sort the books by alphabetical order. The difference between just using

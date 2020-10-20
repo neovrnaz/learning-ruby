@@ -1,4 +1,3 @@
-
 class Player
   include Comparable
   attr_accessor :name, :score
