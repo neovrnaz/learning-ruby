@@ -20,10 +20,16 @@ module Inventoryable
       instances.each(&block)
     end
 
-    def in_stock_report
-      puts "#{self.to_s} In Stock Report"
+    def out_of_stock_report
+      title = "#{self.to_s} Out of Stock Report"
       reportable = instances.select{ |instance| instance.in_stock? }
-      reportable.each do |item|
+      report(title, reportable)
+      puts "\n"
+    end
+
+    def report(title, items)
+      puts title
+      items.each do |item|
         line = []
         line.push("Item: #{item.attributes[:name]}")
         line.push("Stock: #{item.stock_count}")
@@ -32,6 +38,12 @@ module Inventoryable
         end
         puts line.join("\t")
       end
+    end
+
+    def in_stock_report
+      title = "#{self.to_s} In Stock Report"
+      reportable = instances.select{ |instance| instance.in_stock? }
+      report(title, reportable)
       puts "\n"
     end
   end
@@ -49,57 +61,59 @@ module Inventoryable
   end
 
 end
+module Products
+  class Shirt
+    include Inventoryable
+    attr_accessor :attributes
 
-class Shirt
-  include Inventoryable
-  attr_accessor :attributes
+    def initialize(attributes)
+      @attributes = attributes
+    end
+  end
 
-  def initialize(attributes)
-    @attributes = attributes
+  class Pant
+    include Inventoryable
+    attr_accessor :attributes
+
+    def initialize(attributes)
+      @attributes = attributes
+    end
+  end
+
+  class Accessory
+    include Inventoryable
+    attr_accessor :attributes
+
+    def initialize(attributes)
+      @attributes = attributes
+    end
   end
 end
 
-class Pant
-  include Inventoryable
-  attr_accessor :attributes
-
-  def initialize(attributes)
-    @attributes = attributes
-  end
-end
-
-class Accessory
-  include Inventoryable
-  attr_accessor :attributes
-
-  def initialize(attributes)
-    @attributes = attributes
-  end
-end
-
-shirt = Shirt.create(name: "MTF", size: "L")
+shirt = Products::Shirt.create(name: "MTF", size: "L")
 shirt.stock_count = 10
 
-shirt = Shirt.create(name: "MTF2", size: "L")
+shirt = Products::Shirt.create(name: "MTF2", size: "L")
 
-shirt = Shirt.create(name: "MTF", size: "M")
+shirt = Products::Shirt.create(name: "MTF", size: "M")
 shirt.stock_count = 9
 
-pant = Pant.create(name: "Jeans", size: "M")
+pant = Products::Pant.create(name: "Jeans", size: "M")
 pant.stock_count = 2
 
-pant = Pant.create(name: "Jeans", size: "S")
+pant = Products::Pant.create(name: "Jeans", size: "S")
 pant.stock_count = 4
 
-accessory = Accessory.create(name: "Belt", size: "M")
+accessory = Products::Accessory.create(name: "Belt", size: "M")
 accessory.stock_count = 1
 
-accessory = Accessory.create(name: "Belt", size: "L")
+accessory = Products::Accessory.create(name: "Belt", size: "L")
 accessory.stock_count = 1
 
-accessory = Accessory.create(name: "Necklace")
+accessory = Products::Accessory.create(name: "Necklace")
 accessory.stock_count = 1
 
-Shirt.in_stock_report
-Pant.in_stock_report
-Accessory.in_stock_report
+Products::Shirt.out_of_stock_report
+Products::Shirt.in_stock_report
+Products::Pant.in_stock_report
+Products::Accessory.in_stock_report
